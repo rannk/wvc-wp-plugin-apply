@@ -15,10 +15,27 @@ jQuery(document).ready(function($) {
             var attachment = mediaUploader.state().get('selection').first().toJSON();
             if(attachment.url != undefined){
                 $("#wvc_cover_preview").attr("src", attachment.url);
+                $("#rk_wvc_cover_value").val(attachment.url);
             }
         });
 
         // 打开媒体库对话框
         mediaUploader.open();
+    });
+
+    $('#wvc-product-meta-save').on('click', function (e){
+        e.preventDefault();
+        let data = {
+            "rk_wvc_brand": $("#rk_wvc_brand").val(),
+            "rk_wvc_weight": $("#rk_wvc_weight").val(),
+        }
+        $.ajax({
+            url:"/wp-json/wvc/pdMetaSave",
+            type:"post",
+            data:data,
+            success:function(data,dataTextStatus,jqxhr){
+                console.log(data);
+            }
+        })
     });
 });

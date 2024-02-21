@@ -40,3 +40,96 @@
     text-align: center;
     min-width: 1em;
 }
+.wvcModal{
+    background-color: #ffffff;
+    width: 500px;
+    display: none;
+}
+.wvcModal h4{
+    padding: 15px;
+}
+.wvcModal .content{
+    padding: 20px;
+}
+.wvcModal .content .row{
+    margin-bottom: 10px;
+}
+.wvcModal .footer{
+    position: relative;
+    bottom: 0;
+    text-align: right;
+    display: block;
+    width: 100%;
+    padding: 15px;
+}
+ul.wvcSampleList{
+    list-style: none;
+}
+.wvcSampleList h5{
+    font-size: 15px;
+}
+.wvcSampleList li{
+
+    position: relative;
+    margin-top: 10px;
+    min-height: 70px;
+}
+
+.wvcSampleList .wvcPdCover{
+    position: absolute;
+    top:5px;
+    left:5px;
+    width: 70px;
+    height: 90px;
+    overflow: hidden;
+}
+.wvcSampleList .icon{
+    position: absolute;
+    top: 20px;
+    right:-20px;
+    color:#cccccc;
+}
+
+.wvcSampleList .progress-4{
+    position: absolute;
+    top: 20px;
+    right:-20px;
+}
+#customer_details .required{
+    color:red;
+}
+
+label .warning{
+    border: red 1px solid;
+    font-size: 12px;
+    padding: 5px 10px;
+    margin: 5px 0;
+    display: block;
+    color:red;
+}
+
+.success-step{
+    color:green;
+    border: green 1px solid;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+@media (max-width:768px) {
+    .wvcModal{
+        background-color: #ffffff;
+        width: 80%;
+    }
+}
+
+.progress-4 {
+    width:15px;
+    height:2px;
+    -webkit-mask:linear-gradient(90deg,#000 70%,#0000 0) 0/20%;
+    background:
+            linear-gradient(#000 0 0) 0/0% no-repeat
+            #ddd;
+    animation:p4 2s infinite steps(6);
+}
+@keyframes p4 {
+    100% {background-size:120%}
+}

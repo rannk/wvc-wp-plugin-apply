@@ -1,4 +1,11 @@
-
+<?php
+$uInfo = $_COOKIE['_wvc_uinfo'];
+if(!empty($uInfo)){
+    $uInfo = json_decode(str_replace('\"', '"', $uInfo), true);
+}else{
+    $uInfo = [];
+}
+?>
 <div class="col2-set" id="customer_details">
     <div class="col-1">
         <div class="woocommerce-billing-fields">
@@ -8,28 +15,26 @@
             <div class="woocommerce-billing-fields__field-wrapper">
                 <p class="form-row form-row-first validate-required woocommerce-validated"
                    id="billing_first_name_field" data-priority="10">
-                    <label for="billing_first_name" class="">
+                    <label for="billing_first_name">
                         First name&nbsp;
-                        <abbr class="required" title="required">
-                            *
-                        </abbr>
+                        <abbr class="required" req-tip="please fill the first name">*</abbr>
                     </label>
                     <span class="woocommerce-input-wrapper">
-						<input type="text" class="input-text " name="billing_first_name" id="billing_first_name"
-                               placeholder="" value="ffe" autocomplete="given-name">
+						<input type="text" class="input-text wvcInputForm" name="billing_first_name" id="billing_first_name"
+                               placeholder="" value="<?=$uInfo['billing_first_name']?>" autocomplete="given-name">
 					</span>
                 </p>
                 <p class="form-row form-row-last validate-required woocommerce-validated"
                    id="billing_last_name_field" data-priority="20">
                     <label for="billing_last_name" class="">
                         Last name&nbsp;
-                        <abbr class="required" title="required">
+                        <abbr class="required" title="required" req-tip="please fill the last name">
                             *
                         </abbr>
                     </label>
                     <span class="woocommerce-input-wrapper">
-						<input type="text" class="input-text " name="billing_last_name" id="billing_last_name"
-                               placeholder="" value="ffee" autocomplete="family-name">
+						<input type="text" class="input-text wvcInputForm" name="billing_last_name" id="billing_last_name"
+                               placeholder="" value="<?=$uInfo['billing_last_name']?>" autocomplete="family-name">
 					</span>
                 </p>
                 <p class="form-row form-row-wide woocommerce-validated" id="billing_company_field"
@@ -41,20 +46,20 @@
 						</span>
                     </label>
                     <span class="woocommerce-input-wrapper">
-						<input type="text" class="input-text " name="billing_company" id="billing_company"
-                               placeholder="" value="" autocomplete="organization">
+						<input type="text" class="input-text wvcInputForm" name="billing_company" id="billing_company"
+                               placeholder="" value="<?=$uInfo['billing_company']?>" autocomplete="organization">
 					</span>
                 </p>
                 <p class="form-row form-row-wide address-field update_totals_on_change validate-required woocommerce-validated"
                    id="billing_country_field" data-priority="40">
                     <label for="billing_country" class="">
                         Country / Region&nbsp;
-                        <abbr class="required" title="required">
+                        <abbr class="required" title="required" req-tip="please choice the country">
                             *
                         </abbr>
                     </label>
                     <span class="woocommerce-input-wrapper">
-						<select name="billing_country" id="billing_country" class="country_to_state country_select select2-hidden-accessible"
+						<select name="billing_country" id="billing_country" class="country_to_state country_select select2-hidden-accessible wvcInputForm"
                                 autocomplete="country" data-placeholder="Select a country / region…" data-label="Country / Region"
                                 tabindex="-1" aria-hidden="true">
 							<option value="">
@@ -198,7 +203,7 @@
 							<option value="CL">
 								Chile
 							</option>
-							<option value="CN" selected="selected">
+							<option value="CN">
 								China
 							</option>
 							<option value="CX">
@@ -808,40 +813,27 @@
 								Zimbabwe
 							</option>
 						</select>
-						<span class="select2 select2-container select2-container--default" dir="ltr"
-                              style="width: 100%;">
-							<span class="selection">
-								<span class="select2-selection select2-selection--single" aria-haspopup="true"
-                                      aria-expanded="false" tabindex="0" aria-label="Country / Region" role="combobox">
-									<span class="select2-selection__rendered" id="select2-billing_country-container"
-                                          role="textbox" aria-readonly="true" title="Chile">
-										Chile
-									</span>
-									<span class="select2-selection__arrow" role="presentation">
-										<b role="presentation"></b>
-									</span>
-								</span>
-							</span>
-							<span class="dropdown-wrapper" aria-hidden="true"></span>
-						</span>
-						<noscript>
-							<button type="submit" name="woocommerce_checkout_update_totals" value="Update country / region">
-								Update country / region
-							</button>
-						</noscript>
+                        <input type="hidden" value="<?=$uInfo['billing_country']?>" id="billing_country_hidden">
+                        <script>
+                            jQuery("#billing_country option").each(function (){
+                                if(jQuery(this).val() == jQuery("#billing_country_hidden").val()){
+                                    jQuery(this).attr("selected", "selected");
+                                }
+                            });
+                        </script>
 					</span>
                 </p>
                 <p class="form-row address-field validate-required woocommerce-validated form-row-wide"
                    id="billing_address_1_field" data-priority="50">
                     <label for="billing_address_1" class="">
                         Street address&nbsp;
-                        <abbr class="required" title="required">
+                        <abbr class="required" title="required" req-tip="please fill the address">
                             *
                         </abbr>
                     </label>
                     <span class="woocommerce-input-wrapper">
-						<input type="text" class="input-text " name="billing_address_1" id="billing_address_1"
-                               placeholder="House number and street name" value="feee" autocomplete="address-line1"
+						<input type="text" class="input-text wvcInputForm" name="billing_address_1" id="billing_address_1"
+                               placeholder="House number and street name" value="<?=$uInfo['billing_address_1']?>" autocomplete="address-line1"
                                data-placeholder="House number and street name">
 					</span>
                 </p>
@@ -854,8 +846,8 @@
 						</span>
                     </label>
                     <span class="woocommerce-input-wrapper">
-						<input type="text" class="input-text " name="billing_address_2" id="billing_address_2"
-                               placeholder="Apartment, suite, unit, etc. (optional)" value="" autocomplete="address-line2"
+						<input type="text" class="input-text wvcInputForm" name="billing_address_2" id="billing_address_2"
+                               placeholder="Apartment, suite, unit, etc. (optional)" value="<?=$uInfo['billing_address_2']?>" autocomplete="address-line2"
                                data-placeholder="Apartment, suite, unit, etc. (optional)">
 					</span>
                 </p>
@@ -863,95 +855,13 @@
                    id="billing_city_field" data-priority="70" data-o_class="form-row form-row-wide address-field validate-required">
                     <label for="billing_city" class="">
                         Town / City&nbsp;
-                        <abbr class="required" title="required">
+                        <abbr class="required" title="required" req-tip="please fill the city">
                             *
                         </abbr>
                     </label>
                     <span class="woocommerce-input-wrapper">
-						<input type="text" class="input-text " name="billing_city" id="billing_city"
-                               placeholder="" value="fefee" autocomplete="address-level2">
-					</span>
-                </p>
-                <p class="form-row address-field validate-required validate-state form-row-wide woocommerce-validated"
-                   id="billing_state_field" data-priority="80" data-o_class="form-row form-row-wide address-field validate-required validate-state">
-                    <label for="billing_state" class="">
-                        Region&nbsp;
-                        <abbr class="required" title="required">
-                            *
-                        </abbr>
-                    </label>
-                    <span class="woocommerce-input-wrapper">
-						<select id="billing_state" name="billing_state" data-input-classes=""
-                                class="state_select select2-hidden-accessible" tabindex="-1" aria-hidden="true">
-							<option value="">
-								Select an option…
-							</option>
-							<option value="CL-AI">
-								Aisén del General Carlos Ibañez del Campo
-							</option>
-							<option value="CL-AN">
-								Antofagasta
-							</option>
-							<option value="CL-AP">
-								Arica y Parinacota
-							</option>
-							<option value="CL-AR">
-								La Araucanía
-							</option>
-							<option value="CL-AT">
-								Atacama
-							</option>
-							<option value="CL-BI">
-								Biobío
-							</option>
-							<option value="CL-CO">
-								Coquimbo
-							</option>
-							<option value="CL-LI">
-								Libertador General Bernardo O'Higgins
-							</option>
-							<option value="CL-LL">
-								Los Lagos
-							</option>
-							<option value="CL-LR">
-								Los Ríos
-							</option>
-							<option value="CL-MA">
-								Magallanes
-							</option>
-							<option value="CL-ML">
-								Maule
-							</option>
-							<option value="CL-NB">
-								Ñuble
-							</option>
-							<option value="CL-RM">
-								Región Metropolitana de Santiago
-							</option>
-							<option value="CL-TA">
-								Tarapacá
-							</option>
-							<option value="CL-VS">
-								Valparaíso
-							</option>
-						</select>
-						<span class="select2 select2-container select2-container--default select2-container--below"
-                              dir="ltr" style="width: 100%;">
-							<span class="selection">
-								<span class="select2-selection select2-selection--single" aria-haspopup="true"
-                                      aria-expanded="false" tabindex="0" aria-labelledby="select2-billing_state-container"
-                                      role="combobox">
-									<span class="select2-selection__rendered" id="select2-billing_state-container"
-                                          role="textbox" aria-readonly="true" title="La Araucanía">
-										La Araucanía
-									</span>
-									<span class="select2-selection__arrow" role="presentation">
-										<b role="presentation"></b>
-									</span>
-								</span>
-							</span>
-							<span class="dropdown-wrapper" aria-hidden="true"></span>
-						</span>
+						<input type="text" class="input-text wvcInputForm" name="billing_city" id="billing_city"
+                               placeholder="" value="<?=$uInfo['billing_city']?>" autocomplete="address-level2">
 					</span>
                 </p>
                 <p class="form-row address-field validate-postcode woocommerce-validated form-row-wide"
@@ -963,34 +873,34 @@
 						</span>
                     </label>
                     <span class="woocommerce-input-wrapper">
-						<input type="text" class="input-text " name="billing_postcode" id="billing_postcode"
-                               placeholder="" value="2000000" autocomplete="postal-code">
+						<input type="text" class="input-text wvcInputForm" name="billing_postcode" id="billing_postcode"
+                               placeholder="" value="<?=$uInfo['billing_postcode']?>" autocomplete="postal-code">
 					</span>
                 </p>
                 <p class="form-row form-row-wide validate-required validate-phone woocommerce-validated"
                    id="billing_phone_field" data-priority="100">
                     <label for="billing_phone" class="">
                         Phone&nbsp;
-                        <abbr class="required" title="required">
+                        <abbr class="required" title="required" req-tip="please fill the phone">
                             *
                         </abbr>
                     </label>
                     <span class="woocommerce-input-wrapper">
-						<input type="tel" class="input-text " name="billing_phone" id="billing_phone"
-                               placeholder="" value="33333" autocomplete="tel">
+						<input type="tel" class="input-text wvcInputForm" name="billing_phone" id="billing_phone"
+                               placeholder="" value="<?=$uInfo['billing_phone']?>" autocomplete="tel">
 					</span>
                 </p>
                 <p class="form-row form-row-wide validate-required validate-email woocommerce-validated"
                    id="billing_email_field" data-priority="110">
                     <label for="billing_email" class="">
                         Email address&nbsp;
-                        <abbr class="required" title="required">
+                        <abbr class="required" title="required" req-tip="please fill the email">
                             *
                         </abbr>
                     </label>
                     <span class="woocommerce-input-wrapper">
-						<input type="email" class="input-text " name="billing_email" id="billing_email"
-                               placeholder="" value="rannk@163.com" autocomplete="email username">
+						<input type="email" class="input-text wvcInputForm" name="billing_email" id="billing_email"
+                               placeholder="" value="<?=$uInfo['billing_email']?>" autocomplete="email username">
 					</span>
                 </p>
             </div>
@@ -1012,25 +922,12 @@
 						</span>
                     </label>
                     <span class="woocommerce-input-wrapper">
-						<textarea name="order_comments" class="input-text " id="order_comments"
+						<textarea name="order_comments" class="input-text wvcInputForm" id="order_comments"
                                   placeholder="Notes about your order, e.g. special notes for delivery."
-                                  rows="2" cols="5">
-						</textarea>
+                                  rows="2" cols="7"><?=$uInfo['order_comments']?></textarea>
 					</span>
                 </p>
             </div>
-            <input type="hidden" name="wc_order_attribution_type" value="typein">
-            <input type="hidden" name="wc_order_attribution_url" value="http://wp.local/wp-admin/post.php?post=2268&amp;action=edit">
-            <input type="hidden" name="wc_order_attribution_utm_campaign" value="(none)">
-            <input type="hidden" name="wc_order_attribution_utm_source" value="(direct)">
-            <input type="hidden" name="wc_order_attribution_utm_medium" value="(none)">
-            <input type="hidden" name="wc_order_attribution_utm_content" value="(none)">
-            <input type="hidden" name="wc_order_attribution_utm_id" value="(none)">
-            <input type="hidden" name="wc_order_attribution_utm_term" value="(none)">
-            <input type="hidden" name="wc_order_attribution_session_entry" value="http://wp.local/about-us/personal-biography/">
-            <input type="hidden" name="wc_order_attribution_session_start_time" value="2024-02-12 08:41:29">
-            <input type="hidden" name="wc_order_attribution_session_pages" value="10">
-            <input type="hidden" name="wc_order_attribution_session_count" value="1">
-            <input type="hidden" name="wc_order_attribution_user_agent" value="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"></div>
+        </div>
     </div>
 </div>
