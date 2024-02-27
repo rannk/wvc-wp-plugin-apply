@@ -40,26 +40,43 @@ COMMENT='样品申请临时记录'
 COLLATE='utf8_unicode_ci'
 ENGINE=InnoDB";
     $wpdb->query($sql);
+
+    $sql = "DESCRIBE ".$wpdb->base_prefix."wvc_apply";
+    $result = $wpdb->get_results($sql, ARRAY_A);
+    $fields = [];
+    foreach($result as $row){
+        $fields = $row['Field'];
+    }
+
+    if(!in_array("isTrash", $fields)){
+        $sql = "ALTER TABLE `wp_wvc_apply`
+	ADD COLUMN `isTrash` TINYINT NOT NULL DEFAULT '0' AFTER `addtime`";
+        $wpdb->query($sql);
+    }
+
+    $role = get_role("administrator");
+    $role->add_cap("wvc_auth_apply_list");
+
+    add_role("wvc_role", "WVC Operator", ["wvc_auth_apply_list"=>true, "edit_posts"=>true, "read" => true]);
 }
 
 // 添加管理菜单
 add_action("admin_menu", function (){
     add_menu_page("WVC product management", "WVC product",'manage_options','rk_wvc_product_management','rk_wvc_product_management','dashicons-archive');
-    add_submenu_page("rk_wvc_product_management", "Apply Lists", "Aapply Lists", "manage_options", "rk_wvc_product_apply_lists", "rk_wvc_product_apply_lists");
+    add_submenu_page("rk_wvc_product_management", "Apply Lists", "Aapply Lists", "wvc_auth_apply_list", "rk_wvc_product_apply_lists", "rk_wvc_product_apply_lists");
 });
 
 
 add_action("wp_enqueue_scripts", function (){
-    wp_enqueue_script("rk_mvc_main_js", _RK_WVC()->plugin_url() . "/assets/js/rk-wvc-main.js", array('jquery'));
-    wp_enqueue_style("rk_mvc_main_style", _RK_WVC()->plugin_url() . "/assets/css/rk-wvc-style.css");
-});
-
-add_action("wp_enqueue_style", function (){
-
+    wp_enqueue_script("rk_mvc_jquery_js", _RK_WVC()->plugin_url() . "/assets/js/rk-jquery-plugins.js?v=1", array('jquery'));
+    wp_enqueue_script("rk_mvc_main_js", _RK_WVC()->plugin_url() . "/assets/js/rk-wvc-main.js?v=" . time(), array('jquery'));
+    wp_enqueue_style("rk_mvc_main_style", _RK_WVC()->plugin_url() . "/assets/css/rk-wvc-style.css?v=1.1");
 });
 
 add_action("admin_enqueue_scripts", function (){
+    wp_enqueue_script("rk_mvc_jquery_js", _RK_WVC()->plugin_url() . "/assets/js/rk-jquery-plugins.js", array('jquery'));
     wp_enqueue_script("rk_mvc_main", _RK_WVC()->plugin_url() . "/assets/js/rk-wvc-admin.js", array('jquery'));
+    wp_enqueue_style("rk_mvc_main_style", _RK_WVC()->plugin_url() . "/assets/css/rk-wvc-style.css");
 });
 
 function rk_wvc_product_management()
@@ -91,6 +108,19 @@ html;
     $_html = str_replace('{wvc_brand}', $rk_wvc_brand, $_html);
     $_html = str_replace('{wvc_weight}', $rk_wvc_weight, $_html);
     echo  $_html;
+}
+
+function rk_wvc_product_apply_lists()
+{
+    if($_POST['doaction'] == "Apply" && $_POST['action'] == "trash"){ //提交操作
+        _RK_WVC()->moveApplyToTrash($_POST['post']);
+    }
+
+    $page = empty($_REQUEST['cp'])?1:$_REQUEST['cp'];
+    $cond['s'] = empty($_REQUEST['s'])?"":$_REQUEST['s'];
+    set_query_var("applyLists", _RK_WVC()->applyLists($page, $cond));
+    set_query_var("applyListsCount", _RK_WVC()->applyListsCount($page, $cond));
+    load_template(__DIR__ . "/templates/applyList.php");
 }
 
 // 增加管理页面属性
@@ -238,6 +268,7 @@ Congratulations! you have selected this product in the cart, you can continue to
     <div class="row">
     <label>fill the spec</label>
     <input type="text" placeholder="Fill in the specifications you want" id="wvc_pd_spec">
+    <span style="margin-left: 10px;color:#5C5C5C; font-size:12px">If you don't know the specific Spec, you can also enter your requirements here.</span>
     </div>
     <div class="row">
     <label for="wvc_pd_weight_other">choice the weight<span class="required" req-tip="please fill in the weight" req-up-for="wvc_pd_weight_select" req-up-value="other"></span></label>

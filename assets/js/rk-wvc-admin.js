@@ -34,8 +34,37 @@ jQuery(document).ready(function($) {
             type:"post",
             data:data,
             success:function(data,dataTextStatus,jqxhr){
-                console.log(data);
+
             }
         })
+    });
+
+    $(".applyDetailView").click(function (){
+        let id = $(this).attr("appid");
+        let uInfo = $.parseJSON($("#uInfo-"+id).val());
+
+        let pdInfo = $.parseJSON($("#pdInfo-"+id).val());
+        $("#wvcApplyDetailModal .fillInfo").each(function (){
+           let prop = $(this).attr("prop");
+           $(this).html(uInfo[prop]);
+        });
+
+        let _h = '';
+        for(let i=0;i<pdInfo.length;i++){
+            _h += '<li><div style="font-weight: bold">'+pdInfo[i].wvc_pd_name+'</div>';
+            _h += '<div class="sj1"> Spec: ' + pdInfo[i].wvc_pd_spec + '</div>';
+            _h += '<div class="sj1"> Brand: ' + pdInfo[i].wvc_pd_brand_select + ' '+pdInfo[i].wvc_pd_brand_other+'</div>';
+            _h += '<div class="sj1"> Weight: ' + pdInfo[i].wvc_pd_weight_select + ' '+pdInfo[i].wvc_pd_weight_other+'</div></li>';
+        }
+
+        $("#wvcApplyDetailModal #sampleLists").html(_h);
+
+        $("#wvcApplyDetailModal #countryInfo").html(countriesArr[uInfo.billing_country]);
+
+        $("#wvcApplyDetailModal").modal("show");
+    });
+
+    $("#wvc-apply-search-submit").click(function (){
+        location.href='/wp-admin/admin.php?page=rk_wvc_product_apply_lists&s=' + $("#post-search-input").val();
     });
 });

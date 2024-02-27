@@ -42,8 +42,10 @@
 }
 .wvcModal{
     background-color: #ffffff;
-    width: 500px;
+    width: 600px;
     display: none;
+    font-size: 18px;
+    overflow: scroll;
 }
 .wvcModal h4{
     padding: 15px;
@@ -62,8 +64,30 @@
     width: 100%;
     padding: 15px;
 }
-ul.wvcSampleList{
+
+.wvcModal .row-2{
+    display: inline-block;
+    float: left;
+    width: 50%;
+}
+.wvcModal .line1{
+    margin-bottom: 5px;
+    border-bottom: #ccc 1px dashed;
+    margin-right: 10px;
+    width: 90%;
+}
+#wvcApplyDetailModal label{
+    font-size: 14px;
+    font-weight: bold;
+}
+#wvcApplyDetailModal ul li{
+    margin-bottom: 10px;
+}
+.wvcModal ul{
     list-style: none;
+}
+.sj1{
+    padding-left: 10px;
 }
 .wvcSampleList h5{
     font-size: 15px;
@@ -98,6 +122,9 @@ ul.wvcSampleList{
 #customer_details .required{
     color:red;
 }
+.wvcProductTableOnMobile{
+    display: none;
+}
 
 label .warning{
     border: red 1px solid;
@@ -117,10 +144,91 @@ label .warning{
 @media (max-width:768px) {
     .wvcModal{
         background-color: #ffffff;
-        width: 80%;
+        width: 90%;
+    }
+    .wvcModal .btnSmall{
+        padding: 7px;
+    }
+    .wvcModal h4{
+        padding-bottom: 0;
+        font-size: 25px;
     }
 }
 
+@media (max-width: 436px){
+    .wvcGrid2{
+        height: auto !important;
+    }
+    .wvcGrid2 .gridItem{
+        width: 50% !important;
+        height: auto !important;
+        float: left;
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        display: inline;
+    }
+}
+
+.wvcProductTableOnMobile{
+    display: block;
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+    font-size: 12px;
+}
+
+.wvcProductTableOnMobile li{
+    border: #ccc5b9 1px solid;
+    border-radius: 2%;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    text-align: center;
+    padding: 0;
+}
+
+.wvcProductTableOnMobile li label{
+    display: inline-block;
+    width: 50%;
+    word-wrap: break-word;
+}
+
+.wvcProductTableOnMobile li label:nth-child(1){
+    background-color: #FBEDCD;
+}
+
+.wvcProductTableOnMobile h5{
+    font-size: 16px;
+    padding-top: 10px;
+    background-color: #F2C45E;
+    word-wrap: break-word;
+}
+
+
+.wvcProductTableOnMobile .wvcCardContent{
+    display: none;
+}
+
+.wvcProductTableOnMobile .wvcCardContent.on{
+    display: block;
+}
+
+.btnOutlineStyle:hover{
+    color:#ffffff !important;
+}
+
+.rk-svg-icon{
+    display: inline-block;
+    margin-left: 5px;
+    width: 10px;
+    height: 10px;
+}
+.rk-svg-icon.svg-down{
+    background-image: url("/wp-content/plugins/rk-wvc-product-form/assets/svg/icon-down.svg");
+}
+.rk-svg-icon.svg-up{
+    background-image: url("/wp-content/plugins/rk-wvc-product-form/assets/svg/icon-up.svg");
+}
 .progress-4 {
     width:15px;
     height:2px;
@@ -132,4 +240,8 @@ label .warning{
 }
 @keyframes p4 {
     100% {background-size:120%}
+}
+
+ul li{
+    word-wrap: break-word;
 }

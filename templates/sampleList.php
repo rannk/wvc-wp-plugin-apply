@@ -17,5 +17,5 @@
         </li>
         <?php }?>
     </ul>
-    <a href="#;" class="btBtn btnOutlineStyle btnNormalColor btnSmall btnFullWidth btnRightPosition wvc_apply_btn" style="text-align: center !important;display: block; margin-left: 17px !important;">Get Sample</a>
+    <a href="#;" class="btBtn btnOutlineStyle btnNormalColor btnSmall btnFullWidth btnRightPosition wvc_apply_btn" style="text-align: center !important;display: block;">Get Sample</a>
 </div>

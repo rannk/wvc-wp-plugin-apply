@@ -3,6 +3,7 @@ class RK_WVC
 {
     protected static $_instance = null;
 
+    const _LIMIT_NUM = 20;
 
     public static function instance() {
         if ( is_null( self::$_instance ) ) {
@@ -198,6 +199,57 @@ class RK_WVC
         $wpdb->query($sql);
         $sql = "delete from ". $wpdb->base_prefix . "wvc_sample_apply where uid='".addslashes($uid)."'";
         $wpdb->query($sql);
+    }
+
+    public function applyLists($page = 1, $cond = [])
+    {
+        global $wpdb;
+        $sql = "select * from ". $wpdb->base_prefix . "wvc_apply ";
+        $sql .= $this->getApplyListsCondSql($cond);
+        $sql .= "order by addtime desc ";
+        $st = ($page - 1) * self::_LIMIT_NUM;
+        $sql .= "limit $st, " . self::_LIMIT_NUM;
+
+        return $wpdb->get_results($sql, ARRAY_A);
+    }
+
+    public function applyListsCount($page = 1, $cond = [])
+    {
+        global $wpdb;
+        $sql = "select count(id) as cs from ". $wpdb->base_prefix . "wvc_apply ";
+        $sql .= $this->getApplyListsCondSql($cond);
+        $row = $wpdb->get_row($sql, ARRAY_A);
+        $ret['current_page'] = $page;
+        $ret['total'] = $row['cs'];
+        $ret['pages'] = ceil($row['cs'] / self::_LIMIT_NUM);
+
+        return $ret;
+    }
+
+    public function getApplyListsCondSql($cond)
+    {
+        $sql = "where isTrash=0 ";
+        if(!empty($cond['s'])){
+            $s = addslashes($cond['s']);
+            $sql .= "and (uInfo like '%".$s."%' or pdInfo like '%".$s."%')";
+        }
+
+        return $sql;
+    }
+
+    public function moveApplyToTrash($arr)
+    {
+        global $wpdb;
+        if(!empty($arr)){
+            $str = implode(",", $arr);
+            $sql = "update ". $wpdb->base_prefix . "wvc_apply set  isTrash=1 where id in (".addslashes($str).")";
+            $wpdb->query($sql);
+        }
+    }
+
+    public function getCountries()
+    {
+        return require __DIR__ . "/rk-countries.php";
     }
 
     /**
