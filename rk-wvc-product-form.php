@@ -11,6 +11,8 @@ require_once __DIR__ . "/includes/class-rk-wvc.php";
 require_once __DIR__ . "/includes/rk-wvc-widget-functions.php";
 require_once __DIR__ . "/api.php";
 
+global $_wvcApplyModalDisplayed;
+$_wvcApplyModalDisplayed = 0;
 function _RK_WVC()
 {
     return RK_WVC::instance();
@@ -71,6 +73,8 @@ add_action("wp_enqueue_scripts", function (){
     wp_enqueue_script("rk_mvc_jquery_js", _RK_WVC()->plugin_url() . "/assets/js/rk-jquery-plugins.js?v=1", array('jquery'));
     wp_enqueue_script("rk_mvc_main_js", _RK_WVC()->plugin_url() . "/assets/js/rk-wvc-main.js?v=" . time(), array('jquery'));
     wp_enqueue_style("rk_mvc_main_style", _RK_WVC()->plugin_url() . "/assets/css/rk-wvc-style.css?v=1.1");
+    echo rk_wvc_apply_modal();
+    echo '<a href="#;" class="wvc_apply_btn circleBottom"><img src="/wp-content/plugins/rk-wvc-product-form/assets/images/sample2.png" /></a>';
 });
 
 add_action("admin_enqueue_scripts", function (){
@@ -241,6 +245,10 @@ function rk_wvc_apply_form()
 
 function rk_wvc_apply_modal()
 {
+    global $_wvcApplyModalDisplayed;
+    if($_wvcApplyModalDisplayed == 1){
+        return '';
+    }
     $_html = <<<_html
 <div id="wvcModal" class="modal wvcModal">
   <header>
@@ -283,6 +291,9 @@ Congratulations! you have selected this product in the cart, you can continue to
 <a class="btBtn btnOutlineStyle btnAlternateColor btnSmall btnNoIcon" id="wvc_pd_select_btn" href="/apply-form">Apply Form</a>
 <a class="btBtn btnOutlineStyle btnNormalColor btnSmall btnNoIcon" id="wvc_pd_modal_close_btn">Close</a>
 </div>
+<div>
+<img class="chatModal" src="https://wvchem.com/wp-content/uploads/2024/02/Objeto-inteligente-vectorial.jpg">
+</div>
 </div>
 </div>
 _html;
@@ -290,6 +301,9 @@ _html;
     $_html = str_replace('{pd_options}', $pd_options, $_html);
     $_html = str_replace('{pd_brand_options}', _RK_WVC()->getBrandOptions(), $_html);
     $_html = str_replace('{pd_weight_options}',  _RK_WVC()->getWeightOptions(), $_html);
+
+    $_wvcApplyModalDisplayed = 1;
+
     return $_html;
 }
 

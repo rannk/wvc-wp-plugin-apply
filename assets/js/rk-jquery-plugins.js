@@ -22,7 +22,8 @@
                 _tWidth = $(panel).width() * 0.9;
             }
             let _m_left_offset = panel.width() / 2 - _tWidth / 2;
-            $(target).css("top", (panel.height() / 2 - $(target).height() / 2) + "px");
+            let _m_top_offset = panel.height() / 2 - $(target).height() / 2;
+            $(target).css("top", _m_top_offset + "px");
             if (_m_left_offset > 0) {
                 $(target).css("left", _m_left_offset + "px");
             }
