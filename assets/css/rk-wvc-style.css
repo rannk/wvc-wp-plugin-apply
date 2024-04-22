@@ -181,7 +181,11 @@ label .warning{
     margin-left: 30px;
     margin-top: 20px;
 }
-
+._wvc_seo_breadcrumbs{
+    width: 1200px;
+    margin: auto;
+    padding-left: 30px;
+}
 @media (max-width:768px) {
     .wvcModal{
         background-color: #ffffff;

@@ -49,16 +49,14 @@ jQuery(document).ready(function ($) {
         }
     });
 
-    $("#wvc_pd_select_btn").click(function () {
-        if($(this).html() != "Select"){
-            return;
-        }
-
+    $(".wvc_pd_select_btn").click(function () {
         if(!$("#wvcPdSelectionModal").verify("check")){
             return;
         }
 
         let _t = this;
+
+        let _text = $(_t).html();
 
         let wvc_pd_name = "";
         if ($("#wvc_pd_name").val() != "") {
@@ -88,14 +86,16 @@ jQuery(document).ready(function ($) {
             success: function (data, dataTextStatus, jqxhr) {
                 data = $.parseJSON(data);
                 if (data.status == 'success') {
-                    if(location.href.indexOf("apply-form")>0){
+                    if($(_t).attr("data-href") != undefined){
+                        location.href = $(_t).attr("data-href");
+                    }else if(location.href.indexOf("apply-form")>0){
                         location.reload();
                     }else{
                         $("#wvcModal .success-step").show();
                     }
 
                 }
-                $(_t).html("Select");
+                $(_t).html(_text);
             }
         })
     });
@@ -143,8 +143,7 @@ jQuery(document).ready(function ($) {
             success: function (data) {
                 data = $.parseJSON(data);
                 if (data.status == 'success') {
-                    alert("submit success");
-                    location.reload();
+                    location.href='/thanks_for_your_messages/';
                 }else{
                     console.log(data.status);
                 }

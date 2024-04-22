@@ -73,6 +73,9 @@ add_action("wp_enqueue_scripts", function (){
     wp_enqueue_script("rk_mvc_jquery_js", _RK_WVC()->plugin_url() . "/assets/js/rk-jquery-plugins.js?v=1", array('jquery'));
     wp_enqueue_script("rk_mvc_main_js", _RK_WVC()->plugin_url() . "/assets/js/rk-wvc-main.js?v=" . time(), array('jquery'));
     wp_enqueue_style("rk_mvc_main_style", _RK_WVC()->plugin_url() . "/assets/css/rk-wvc-style.css?v=1.1");
+});
+
+add_action("wp_footer", function (){
     echo rk_wvc_apply_modal();
     echo '<a href="#;" class="wvc_apply_btn circleBottom"><img src="/wp-content/plugins/rk-wvc-product-form/assets/images/sample2.png" /></a>';
 });
@@ -287,8 +290,8 @@ Congratulations! you have selected this product in the cart, you can continue to
     </div>
     
     <div class="footer">
-<a class="btBtn btnOutlineStyle btnAccentColor btnSmall btnNoIcon" id="wvc_pd_select_btn">Select</a>
-<a class="btBtn btnOutlineStyle btnAlternateColor btnSmall btnNoIcon" id="wvc_pd_select_btn" href="/apply-form">Apply Form</a>
+<a class="btBtn btnOutlineStyle btnAccentColor btnSmall btnNoIcon wvc_pd_select_btn">Select</a>
+<a class="btBtn btnOutlineStyle btnAlternateColor btnSmall btnNoIcon wvc_pd_select_btn" data-href="/apply-form">Apply Form</a>
 <a class="btBtn btnOutlineStyle btnNormalColor btnSmall btnNoIcon" id="wvc_pd_modal_close_btn">Close</a>
 </div>
 <div>

@@ -6,6 +6,7 @@ if(!empty($uInfo)){
     $uInfo = [];
 }
 ?>
+<!-- Google tag (gtag.js) -->
 <div class="col2-set" id="customer_details">
     <div class="col-1">
         <div class="woocommerce-billing-fields">
