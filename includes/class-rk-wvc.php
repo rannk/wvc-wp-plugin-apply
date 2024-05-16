@@ -201,6 +201,16 @@ class RK_WVC
         $wpdb->query($sql);
     }
 
+    public function selectFormSave($params)
+    {
+        global $wpdb;
+        $pdInfo = json_encode([$params]);
+        $uInfo = json_encode(['billing_first_name' => $params['wvc_people_name'], 'billing_email' => $params['wvc_people_email']]);
+        $sql = "INSERT INTO ". $wpdb->base_prefix . "wvc_apply set uInfo='".addslashes($uInfo)."',pdInfo='".addslashes($pdInfo)."',addtime=" . time();
+
+        $wpdb->query($sql);
+    }
+
     public function applyLists($page = 1, $cond = [])
     {
         global $wpdb;

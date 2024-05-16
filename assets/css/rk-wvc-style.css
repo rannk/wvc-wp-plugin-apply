@@ -186,6 +186,7 @@ label .warning{
     margin: auto;
     padding-left: 30px;
 }
+
 @media (max-width:768px) {
     .wvcModal{
         background-color: #ffffff;

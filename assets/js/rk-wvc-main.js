@@ -75,11 +75,14 @@ jQuery(document).ready(function ($) {
             "wvc_pd_spec": $("#wvc_pd_spec").val(),
             "wvc_pd_weight_select": $("#wvc_pd_weight_select").val(),
             "wvc_pd_weight_other": $("#wvc_pd_weight_other").val(),
+            "wvc_people_name":$("#wvc_people_name").val(),
+            'wvc_people_email':$("#wvc_people_email").val(),
         }
 
         $(this).html("Submitting...");
+        $("#wvcModal .success-step").hide();
         $.ajax({
-            url: "/wp-json/wvc/sampleSelect",
+            url: "/wp-json/wvc/selectFormSave",
             type: "post",
             data: data,
             dataType: "json",

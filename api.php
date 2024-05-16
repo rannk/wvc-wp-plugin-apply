@@ -19,6 +19,12 @@ function rk_wvc_apply_api() {
         'callback' => 'rk_wvc_sample_select'
     ] );
 
+    // 选择样品直接保存，包含姓名和邮箱
+    register_rest_route( 'wvc', 'selectFormSave', [
+        'methods'  => 'post',
+        'callback' => 'rk_wvc_select_form_save'
+    ] );
+
     // 移除临时保存的样品
     register_rest_route( 'wvc', 'sampleRemove', [
         'methods'  => 'post',
@@ -60,6 +66,13 @@ function rk_wvc_sample_select($request)
     }
     $params = $request->get_params();
     _RK_WVC()->sampleApplyTmp($uid, json_encode($params));
+    return json_encode(["code"=>200, "status"=>"success"]);
+}
+
+function rk_wvc_select_form_save($request)
+{
+    $params = $request->get_params();
+    _RK_WVC()->selectFormSave($params);
     return json_encode(["code"=>200, "status"=>"success"]);
 }
 

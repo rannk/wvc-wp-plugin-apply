@@ -259,7 +259,7 @@ function rk_wvc_apply_modal()
 </header>
 <div class="content" id="wvcPdSelectionModal">
 <div class="success-step" style="display: none">
-Congratulations! you have selected this product in the cart, you can continue to choose other products or click <a href="/apply-form" style="font-size: 18px">here</a> to fill the apply form
+We have received your request and will soon have relevant personnel contact you
 </div>
     <div class="row">
     <label for="wvc_pd_name">choice the product
@@ -288,14 +288,25 @@ Congratulations! you have selected this product in the cart, you can continue to
     </select>
         <input type="text" placeholder="Fill in the weight you want" id="wvc_pd_weight_other" name="wvc_pd_weight_other" style="display: none;margin-top: 5px">
     </div>
-    
+    <div class="row">
+        <label for="wvc_people_name">Your Name<span class="required" req-tip="please fill in your name" req-up-for="wvc_people_name" ></span></label>
+        <input type="text" placeholder="Fill in your name" id="wvc_people_name" name="wvc_people_name">
+    </div>
+    <div class="row">
+        <label for="wvc_people_email">Your Email<span class="required" req-tip="please fill in your email" ></span></label>
+        <input type="text" placeholder="Fill in your email" id="wvc_people_email">
+    </div>
     <div class="footer">
 <a class="btBtn btnOutlineStyle btnAccentColor btnSmall btnNoIcon wvc_pd_select_btn">Select</a>
-<a class="btBtn btnOutlineStyle btnAlternateColor btnSmall btnNoIcon wvc_pd_select_btn" data-href="/apply-form">Apply Form</a>
 <a class="btBtn btnOutlineStyle btnNormalColor btnSmall btnNoIcon" id="wvc_pd_modal_close_btn">Close</a>
 </div>
 <div>
-<img class="chatModal" src="https://wvchem.com/wp-content/uploads/2024/02/Objeto-inteligente-vectorial.jpg">
+<a href="https://api.whatsapp.com/send?phone=8613310102529" class="whatapp_1" target="_blank">
+<img src="https://wvchem.com/wp-content/uploads/2024/04/whatapp_contact1.png">
+</a>
+<a href="https://api.whatsapp.com/send?phone=8613564567976" class="whatapp_2" target="_blank">
+<img src="https://wvchem.com/wp-content/uploads/2024/04/whatapp_contact2.png">
+</a>
 </div>
 </div>
 </div>
